@@ -1,0 +1,30 @@
+{
+  "name": "lotus-lab",
+  "version": "1.0.0",
+  "description": "Auto-reloading sandbox for CoffeeScript development.",
+  "main": "./js/src/index",
+  "dependencies": {
+    "chalk": "^1.0.0",
+    "combine": "aleclarson/combine#1.0.0",
+    "exit": "aleclarson/exit#1.0.0",
+    "gaze": "^0.5.1",
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "aleclarson/grunt-contrib-coffee",
+    "grunt-contrib-watch": "^0.6.1",
+    "hooker": "^0.2.3",
+    "io": "aleclarson/io#1.0.0",
+    "isNodeJS": "aleclarson/isNodeJS#1.0.0",
+    "load-grunt-tasks": "^3.1.0",
+    "lotus-log": "aleclarson/lotus-log#1.0.0",
+    "lotus-repl": "aleclarson/lotus-repl#1.0.0",
+    "lotus-require": "aleclarson/lotus-require#1.0.0",
+    "minimist": "^1.2.0",
+    "random-string": "aleclarson/random-string#1.0.6",
+    "repeat-string": "^1.5.2",
+    "rewire": "^2.3.3",
+    "stack": "aleclarson/stack#1.0.0"
+  },
+  "peerDependencies": {
+    "coffee-script": "^1.9.2"
+  }
+}
