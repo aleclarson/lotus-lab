@@ -22,5 +22,5 @@ unless syncFs.isFile path
   log.moat 1
   process.exit()
 
-lab = require "./index"
-lab path, process.options
+runLab = require "./runLab"
+runLab path, process.options

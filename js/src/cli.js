@@ -1,4 +1,4 @@
-var Path, base, base1, dir, filename, lab, minimist, parentDir, path, spawn, syncFs;
+var Path, base, base1, dir, filename, minimist, parentDir, path, runLab, spawn, syncFs;
 
 spawn = require("child_process").spawn;
 
@@ -31,8 +31,8 @@ if (!syncFs.isFile(path)) {
   process.exit();
 }
 
-lab = require("./index");
+runLab = require("./runLab");
 
-lab(path, process.options);
+runLab(path, process.options);
 
 //# sourceMappingURL=../../map/src/cli.map
