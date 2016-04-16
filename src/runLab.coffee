@@ -1,17 +1,17 @@
 
+require "isDev"
+require "isNodeJS"
+
 { findPackage } = require "lotus-require/js/src/helpers"
 
 randomString = require "random-string"
 repeatString = require "repeat-string"
-isNodeJS = require "isNodeJS"
 combine = require "combine"
 didExit = require "exit"
 syncFs = require "io/sync"
 Module = require "module"
-isDev = require "isDev"
 Path = require "path"
 sync = require "sync"
-gaze = require "gaze"
 VM = require "vm"
 
 CS = require "coffee-script"

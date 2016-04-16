@@ -1,12 +1,14 @@
-var CS, Module, Path, VM, _logSyntaxError, combine, didExit, findPackage, gaze, isDev, isNodeJS, randomString, repeatString, sync, syncFs;
+var CS, Module, Path, VM, _logSyntaxError, combine, didExit, findPackage, randomString, repeatString, sync, syncFs;
+
+require("isDev");
+
+require("isNodeJS");
 
 findPackage = require("lotus-require/js/src/helpers").findPackage;
 
 randomString = require("random-string");
 
 repeatString = require("repeat-string");
-
-isNodeJS = require("isNodeJS");
 
 combine = require("combine");
 
@@ -16,13 +18,9 @@ syncFs = require("io/sync");
 
 Module = require("module");
 
-isDev = require("isDev");
-
 Path = require("path");
 
 sync = require("sync");
-
-gaze = require("gaze");
 
 VM = require("vm");
 

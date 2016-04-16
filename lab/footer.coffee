@@ -19,6 +19,7 @@ Q.try ->
   log.gray.dim error.stack.trim()
   log.white " "
   log.moat 1
+  repl.sync { error, failure: global.failure }
 
 .always ->
   clearInterval __keepAlive

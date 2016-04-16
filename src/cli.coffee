@@ -1,7 +1,6 @@
 
 { spawn } = require "child_process"
 
-minimist = require "minimist"
 syncFs = require "io/sync"
 Path = require "path"
 
