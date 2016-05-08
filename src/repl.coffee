@@ -1,2 +1,3 @@
 
-repl.sync()
+module.exports = ->
+  repl.sync()

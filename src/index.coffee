@@ -1,8 +1,6 @@
 
-module.exports = ->
+exports.initCommands = ->
 
-  @commands.lab = -> require "./cli"
+  lab: -> require "./cli"
 
-  @commands.repl = -> require "./repl"
-
-  return null
+  repl: -> require "./repl"

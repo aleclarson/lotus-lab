@@ -1,11 +1,12 @@
-module.exports = function() {
-  this.commands.lab = function() {
-    return require("./cli");
+exports.initCommands = function() {
+  return {
+    lab: function() {
+      return require("./cli");
+    },
+    repl: function() {
+      return require("./repl");
+    }
   };
-  this.commands.repl = function() {
-    return require("./repl");
-  };
-  return null;
 };
 
 //# sourceMappingURL=../../map/src/index.map

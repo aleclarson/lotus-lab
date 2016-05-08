@@ -1,4 +1,4 @@
-var CS, Module, Path, VM, _logSyntaxError, combine, didExit, findPackage, randomString, repeatString, sync, syncFs;
+var Module, Path, VM, _logSyntaxError, coffee, combine, didExit, findPackage, randomString, repeatString, sync, syncFs;
 
 require("isDev");
 
@@ -14,6 +14,8 @@ combine = require("combine");
 
 didExit = require("exit");
 
+coffee = require("coffee-script");
+
 syncFs = require("io/sync");
 
 Module = require("module");
@@ -23,8 +25,6 @@ Path = require("path");
 sync = require("sync");
 
 VM = require("vm");
-
-CS = require("coffee-script");
 
 module.exports = function(entry, options) {
   var error, extensions, id, input, mapRef, output, outputDir, paths;
@@ -58,7 +58,7 @@ module.exports = function(entry, options) {
   });
   mapRef = log.ln + "//# sourceMappingURL=" + paths.relative.map + log.ln;
   try {
-    output = CS.compile(input, {
+    output = coffee.compile(input, {
       bare: true,
       sourceMap: true,
       sourceRoot: ".",
@@ -66,8 +66,8 @@ module.exports = function(entry, options) {
       generatedFile: paths.relative.js,
       filename: paths.absolute.coffee
     });
-  } catch (_error) {
-    error = _error;
+  } catch (error1) {
+    error = error1;
     _logSyntaxError(error, entry);
     return false;
   }
@@ -110,7 +110,7 @@ module.exports = function(entry, options) {
 
 _logSyntaxError = function(error, filename) {
   var code, column, label, line, message;
-  label = log.color.bgRed(error.constructor.name);
+  label = log.color.red(error.constructor.name);
   message = error.message;
   line = error.location.first_line;
   code = error.code.split(log.ln);
@@ -123,7 +123,7 @@ _logSyntaxError = function(error, filename) {
   log.moat(1);
   log.stack._logOffender(code[line], column);
   log.popIndent();
-  return log.repl.sync({
+  return repl.sync({
     error: error
   });
 };

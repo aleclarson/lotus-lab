@@ -8,13 +8,12 @@ randomString = require "random-string"
 repeatString = require "repeat-string"
 combine = require "combine"
 didExit = require "exit"
+coffee = require "coffee-script"
 syncFs = require "io/sync"
 Module = require "module"
 Path = require "path"
 sync = require "sync"
 VM = require "vm"
-
-CS = require "coffee-script"
 
 module.exports = (entry, options = {}) ->
 
@@ -47,7 +46,7 @@ module.exports = (entry, options = {}) ->
   mapRef = log.ln + "//# sourceMappingURL=" + paths.relative.map + log.ln
 
   try
-    output = CS.compile input,
+    output = coffee.compile input,
       bare: yes
       sourceMap: yes
       sourceRoot: "."
@@ -95,7 +94,7 @@ module.exports = (entry, options = {}) ->
 
 _logSyntaxError = (error, filename) ->
 
-  label = log.color.bgRed error.constructor.name
+  label = log.color.red error.constructor.name
   message = error.message
   line = error.location.first_line
   code = error.code.split log.ln
@@ -110,4 +109,4 @@ _logSyntaxError = (error, filename) ->
   log.stack._logOffender code[line], column
   log.popIndent()
 
-  log.repl.sync { error }
+  repl.sync { error }
