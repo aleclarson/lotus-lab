@@ -1,10 +1,8 @@
-var Module, Path, VM, _logSyntaxError, coffee, combine, didExit, findPackage, randomString, repeatString, sync, syncFs;
+var Module, Path, VM, _logSyntaxError, coffee, combine, didExit, randomString, repeatString, sync, syncFs;
 
 require("isDev");
 
 require("isNodeJS");
-
-findPackage = require("lotus-require/js/src/helpers").findPackage;
 
 randomString = require("random-string");
 
@@ -27,11 +25,12 @@ sync = require("sync");
 VM = require("vm");
 
 module.exports = function(entry, options) {
-  var error, extensions, id, input, mapRef, output, outputDir, paths;
+  var error, extensions, id, input, mapRef, output, outputDir, paths, pkgPath;
   if (options == null) {
     options = {};
   }
-  lotus.dependers[findPackage(entry)] = true;
+  pkgPath = lotus._helpers.findPackage(entry);
+  lotus.dependers[pkgPath] = true;
   input = syncFs.read(entry);
   input = input.split(log.ln);
   input = input.map(function(line) {

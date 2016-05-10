@@ -2,8 +2,6 @@
 require "isDev"
 require "isNodeJS"
 
-{ findPackage } = require "lotus-require/js/src/helpers"
-
 randomString = require "random-string"
 repeatString = require "repeat-string"
 combine = require "combine"
@@ -17,7 +15,8 @@ VM = require "vm"
 
 module.exports = (entry, options = {}) ->
 
-  lotus.dependers[findPackage entry] = yes
+  pkgPath = lotus._helpers.findPackage entry
+  lotus.dependers[pkgPath] = yes
 
   input = syncFs.read entry
   input = input.split log.ln
