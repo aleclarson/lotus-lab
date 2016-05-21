@@ -3,19 +3,27 @@
   "version": "1.0.0",
   "main": "js/src/index",
   "dependencies": {
+    "coffee-script": "aleclarson/coffee-script#1.9.3",
     "combine": "aleclarson/combine#1.0.0",
     "exit": "aleclarson/exit#1.0.0",
     "io": "aleclarson/io#1.0.0",
     "isDev": "aleclarson/isDev#1.0.0",
     "isNodeJS": "aleclarson/isNodeJS#1.0.0",
+    "log": "aleclarson/log#1.0.0",
+    "q": "aleclarson/q#1.0.0",
     "random-string": "aleclarson/random-string#1.0.6",
-    "sync": "aleclarson/sync#1.0.0",
     "repeat-string": "aleclarson/repeat-string#1.5.4",
-    "coffee-script": "aleclarson/coffee-script#1.9.3"
+    "sync": "aleclarson/sync#1.0.0"
   },
   "lotus": {
     "plugins": [
       "lotus-coffee"
+    ],
+    "implicitDependencies": [
+      "child_process",
+      "module",
+      "path",
+      "vm"
     ]
   }
 }

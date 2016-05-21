@@ -3,6 +3,7 @@
 
 syncFs = require "io/sync"
 Path = require "path"
+log = require "log"
 
 module.exports = (options) ->
 
@@ -21,7 +22,7 @@ module.exports = (options) ->
     log.red "Invalid file: "
     log.white path
     log.moat 1
-    process.exit()
+    return
 
   runLab = require "./runLab"
   runLab path, options

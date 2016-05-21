@@ -1,4 +1,4 @@
-var Module, Path, VM, _logSyntaxError, coffee, combine, didExit, randomString, repeatString, sync, syncFs;
+var Module, Path, VM, _logSyntaxError, coffee, combine, didExit, log, randomString, repeatString, sync, syncFs;
 
 require("isDev");
 
@@ -21,6 +21,8 @@ Module = require("module");
 Path = require("path");
 
 sync = require("sync");
+
+log = require("log");
 
 VM = require("vm");
 

@@ -11,6 +11,7 @@ syncFs = require "io/sync"
 Module = require "module"
 Path = require "path"
 sync = require "sync"
+log = require "log"
 VM = require "vm"
 
 module.exports = (entry, options = {}) ->

@@ -1,10 +1,12 @@
-var Path, spawn, syncFs;
+var Path, log, spawn, syncFs;
 
 spawn = require("child_process").spawn;
 
 syncFs = require("io/sync");
 
 Path = require("path");
+
+log = require("log");
 
 module.exports = function(options) {
   var dir, filename, parentDir, path, runLab;
@@ -23,7 +25,7 @@ module.exports = function(options) {
     log.red("Invalid file: ");
     log.white(path);
     log.moat(1);
-    process.exit();
+    return;
   }
   runLab = require("./runLab");
   return runLab(path, options);
