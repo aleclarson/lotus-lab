@@ -1,13 +1,14 @@
 
+immediate = require "immediate"
+Promise = require "Promise"
 log = require "log"
-Q = require "q"
 
 module.exports = (options) ->
 
   repl.transform = options.transform ?= process.env.REPL or "js"
   repl.loopMode = options.loopMode ?= "nextTick"
 
-  deferred = Q.defer()
+  deferred = Promise.defer()
 
   prompt.didClose -> log.moat 0
 
@@ -19,6 +20,6 @@ module.exports = (options) ->
   # is resolved when 'repl.didClose' emits.
   # That's the only reliable way to know when
   # the 'repl' is actually finished.
-  Q.nextTick -> repl.sync()
+  immediate -> repl.sync()
 
   return deferred.promise

@@ -4,7 +4,7 @@ require = module.require.bind module
 
 __keepAlive = setInterval (->), Infinity
 
-Q.try ->
+Promise.try ->
   __lab()
 
 .then ->

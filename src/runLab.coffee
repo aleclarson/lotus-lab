@@ -4,6 +4,7 @@ require "isNodeJS"
 
 randomString = require "random-string"
 repeatString = require "repeat-string"
+Promise = require "Promise"
 combine = require "combine"
 didExit = require "exit"
 coffee = require "coffee-script"
@@ -78,7 +79,7 @@ module.exports = (entry, options = {}) ->
   log.moat 1
   log.popIndent()
 
-  combine global, { isDev, isNodeJS, process, lotus, log, sync }
+  combine global, { isDev, isNodeJS, process, lotus, log, sync, Promise }
 
   global.__module = new Module entry, module
   __module.filename = entry

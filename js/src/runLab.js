@@ -1,4 +1,4 @@
-var Module, Path, VM, _logSyntaxError, coffee, combine, didExit, log, randomString, repeatString, sync, syncFs;
+var Module, Path, Promise, VM, _logSyntaxError, coffee, combine, didExit, log, randomString, repeatString, sync, syncFs;
 
 require("isDev");
 
@@ -7,6 +7,8 @@ require("isNodeJS");
 randomString = require("random-string");
 
 repeatString = require("repeat-string");
+
+Promise = require("Promise");
 
 combine = require("combine");
 
@@ -100,7 +102,8 @@ module.exports = function(entry, options) {
     process: process,
     lotus: lotus,
     log: log,
-    sync: sync
+    sync: sync,
+    Promise: Promise
   });
   global.__module = new Module(entry, module);
   __module.filename = entry;

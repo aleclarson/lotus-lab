@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "main": "js/src/index",
   "dependencies": {
+    "Promise": "aleclarson/Promise#1.0.0",
     "coffee-script": "aleclarson/coffee-script#1.9.3",
     "combine": "aleclarson/combine#1.0.0",
     "exit": "aleclarson/exit#1.0.0",
+    "immediate": "aleclarson/immediate#4.0.0",
     "io": "aleclarson/io#1.0.0",
     "isDev": "aleclarson/isDev#1.0.0",
     "isNodeJS": "aleclarson/isNodeJS#1.0.0",
     "log": "aleclarson/log#1.0.0",
-    "q": "aleclarson/q#1.0.0",
     "random-string": "aleclarson/random-string#1.0.6",
     "repeat-string": "aleclarson/repeat-string#1.5.4",
     "sync": "aleclarson/sync#1.0.0"
