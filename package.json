@@ -8,7 +8,7 @@
     "combine": "aleclarson/combine#1.0.0",
     "exit": "aleclarson/exit#1.0.0",
     "immediate": "aleclarson/immediate#4.0.0",
-    "io": "aleclarson/io#1.0.0",
+    "io": "aleclarson/io#2.1.0",
     "isDev": "aleclarson/isDev#1.0.0",
     "isNodeJS": "aleclarson/isNodeJS#1.0.0",
     "log": "aleclarson/log#1.0.0",
