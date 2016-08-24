@@ -31,4 +31,4 @@ module.exports = function(options) {
   return runLab(path, options);
 };
 
-//# sourceMappingURL=../../map/src/cli.map
+//# sourceMappingURL=map/cli.map

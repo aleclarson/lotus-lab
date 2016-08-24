@@ -9,4 +9,4 @@ exports.initCommands = function() {
   };
 };
 
-//# sourceMappingURL=../../map/src/index.map
+//# sourceMappingURL=map/index.map

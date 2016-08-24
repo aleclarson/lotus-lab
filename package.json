@@ -1,7 +1,7 @@
 {
   "name": "lotus-lab",
   "version": "1.0.0",
-  "main": "js/src/index",
+  "main": "js/index",
   "dependencies": {
     "Promise": "aleclarson/Promise#1.0.0",
     "coffee-script": "aleclarson/coffee-script#1.9.3",

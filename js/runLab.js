@@ -132,4 +132,4 @@ _logSyntaxError = function(error, filename) {
   });
 };
 
-//# sourceMappingURL=../../map/src/runLab.map
+//# sourceMappingURL=map/runLab.map
