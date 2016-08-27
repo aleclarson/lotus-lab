@@ -2,73 +2,93 @@
 require "isDev"
 require "isNodeJS"
 
-randomString = require "random-string"
-repeatString = require "repeat-string"
+printSyntaxError = require "printSyntaxError"
 Promise = require "Promise"
-combine = require "combine"
-didExit = require "exit"
+didExit = require "didExit"
+Random = require "random"
 coffee = require "coffee-script"
-syncFs = require "io/sync"
-Module = require "module"
+define = require "define"
 Path = require "path"
 sync = require "sync"
 log = require "log"
+FS = require "io/sync"
 VM = require "vm"
+
+template = FS.read Path.resolve __dirname + "/../src/template.coffee"
 
 module.exports = (entry, options = {}) ->
 
-  pkgPath = lotus._helpers.findPackage entry
-  lotus.dependers[pkgPath] = yes
+  if not FS.isFile entry
+    throw Error "Must provide a file path: '#{entry}'"
 
-  input = syncFs.read entry
-  input = input.split log.ln
-  input = input.map (line) -> "  " + line
-  input.unshift syncFs.read Path.resolve __dirname + "/../../lab/header.coffee"
-  input.push syncFs.read Path.resolve __dirname + "/../../lab/footer.coffee"
-  input = input.join log.ln
+  #
+  # Resolve the script path
+  #
 
-  outputDir = Path.resolve Path.join __dirname, "../../tmp"
-
-  extensions = ["coffee", "js", "map"]
+  entryDir = Path.dirname entry
+  outDir = Path.resolve entryDir, "tmp"
 
   loop
-    id = randomString 6
-    break unless syncFs.exists Path.join outputDir, id + ".coffee"
+    id = Random.id 6
+    break unless FS.exists Path.join outDir, id + ".coffee"
 
-  paths = {}
+  relatives = {}
+  sync.each ["coffee", "js", "map"], (ext) ->
+    relatives[ext] = id + "." + ext
 
-  paths.relative = sync.reduce extensions, {}, (paths, extension) ->
-    paths[extension] = id + "." + extension
-    paths
+  absolutes = sync.map relatives, (filePath) ->
+    Path.join outDir, filePath
 
-  paths.absolute = sync.map paths.relative, (path) ->
-    Path.join outputDir, path
+  mapRef = log.ln + "//# sourceMappingURL=" + relatives.map + log.ln
 
-  mapRef = log.ln + "//# sourceMappingURL=" + paths.relative.map + log.ln
+  #
+  # Build the script
+  #
+
+  script = FS
+    .read entry
+    .trim()
+    .split log.ln
+    .join log.ln + "    "
+
+  script = [
+    "__dirname = \"#{Path.dirname absolutes.js}\""
+    "__filename = \"#{absolutes.js}\""
+    template.replace /\$SCRIPT/g, script
+  ].join log.ln
+
+  log.cyan script
+
+  #
+  # Transpile the script
+  #
 
   try
-    output = coffee.compile input,
+    output = coffee.compile script,
       bare: yes
       sourceMap: yes
       sourceRoot: "."
-      sourceFiles: [paths.relative.coffee]
-      generatedFile: paths.relative.js
-      filename: paths.absolute.coffee
+      sourceFiles: [relatives.coffee]
+      generatedFile: relatives.js
+      filename: absolutes.coffee
 
   catch error
-    _logSyntaxError error, entry
+    printSyntaxError error, entry
+    log.moat 1
     return no
 
-  syncFs.makeDir outputDir
-  syncFs.write paths.absolute.coffee, input
-  syncFs.write paths.absolute.js, output.js + mapRef
-  syncFs.write paths.absolute.map, output.v3SourceMap
+  FS.makeDir outDir
+  FS.write absolutes.coffee, script
+  FS.write absolutes.js, output.js + mapRef
+  FS.write absolutes.map, output.v3SourceMap
 
-  options.preservePaths ?= no
-  if !options.preservePaths
-    didExit ->
-      sync.each paths.absolute, (path) ->
-        syncFs.remove path
+  didExit ->
+    log.moat 1
+    log.red "EXIT"
+    log.moat 1
+    if options.preservePaths isnt yes
+      sync.each absolutes, (path) -> FS.remove path
+    return
 
   log.pushIndent 2
   log.moat 1
@@ -79,35 +99,23 @@ module.exports = (entry, options = {}) ->
   log.moat 1
   log.popIndent()
 
-  combine global, { isDev, isNodeJS, process, lotus, log, sync, Promise }
+  global.lotus = lotus
+  global.sync = sync
+  define global, {
+    isDev
+    isNodeJS
+    process
+    log
+    Promise
+  }
 
-  global.__module = new Module entry, module
-  __module.filename = entry
-  __module.dirname = Path.dirname entry
+  global.__module = makeModule entry, module
+  VM.runInThisContext "try { global.__module.require('#{absolutes.js}') } catch(error) { console.log('caught error!'); process.exit(0) }"
+  return yes
 
-  VM.runInThisContext "global.__module.require('#{paths.absolute.js}')"
-
-  yes
-
-#
-# Helpers
-#
-
-_logSyntaxError = (error, filename) ->
-
-  label = log.color.red error.constructor.name
-  message = error.message
-  line = error.location.first_line
-  code = error.code.split log.ln
-  column = error.location.first_column
-
-  log.pushIndent 2
-  log.moat 1
-  log.withLabel label, message
-  log.moat 1
-  log.stack._logLocation line - 1, filename
-  log.moat 1
-  log.stack._logOffender code[line], column
-  log.popIndent()
-
-  repl.sync { error }
+Module = require "module"
+makeModule = (modulePath, parentModule) ->
+  newModule = new Module modulePath, parentModule
+  newModule.filename = modulePath
+  newModule.dirname = Path.dirname modulePath
+  return newModule
