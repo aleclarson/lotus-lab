@@ -1,6 +1,5 @@
 
 require process.env.LOTUS_PATH + "/lotus"
-log = require "log"
 
 noop = ->
 module = global.__module or global.module

@@ -1,7 +1,5 @@
 
 immediate = require "immediate"
-Promise = require "Promise"
-log = require "log"
 
 module.exports = (options) ->
 

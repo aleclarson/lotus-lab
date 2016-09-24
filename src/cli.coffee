@@ -3,7 +3,6 @@
 
 syncFs = require "io/sync"
 Path = require "path"
-log = require "log"
 
 module.exports = (options) ->
 
