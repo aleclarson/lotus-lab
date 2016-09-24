@@ -1,13 +1,12 @@
 
-require "isDev"
-require "isNodeJS"
-
 printSyntaxError = require "printSyntaxError"
+isNodeJS = require "isNodeJS"
 Promise = require "Promise"
 didExit = require "didExit"
 Random = require "random"
 coffee = require "coffee-script"
 define = require "define"
+isDev = require "isDev"
 Path = require "path"
 sync = require "sync"
 log = require "log"
