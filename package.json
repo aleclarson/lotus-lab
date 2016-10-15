@@ -6,8 +6,8 @@
     "lotus-coffee"
   ],
   "scripts": {
-    "build": "coffee -cb -o js src",
-    "postinstall": "postinstall-build js 'npm run build'"
+    "build": "coffee-build -v 1.11.x -b -o js src",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "coffee-script": "aleclarson/coffee-script#1.9.3",
@@ -17,13 +17,9 @@
     "io": "aleclarson/io#2.1.0",
     "isDev": "aleclarson/isDev#2.0.0",
     "isNodeJS": "aleclarson/isNodeJS#2.0.0",
-    "postinstall-build": "0.2.x",
     "printSyntaxError": "aleclarson/printSyntaxError#1.0.0",
     "random": "aleclarson/random#1.0.4",
     "sync": "aleclarson/sync#1.0.0"
-  },
-  "devDependencies": {
-    "coffee-script": "1.9.x"
   },
   "implicitDependencies": [
     "child_process",
