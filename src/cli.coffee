@@ -1,5 +1,5 @@
 
-{ spawn } = require "child_process"
+{spawn} = require "child_process"
 
 Path = require "path"
 fs = require "fsx"

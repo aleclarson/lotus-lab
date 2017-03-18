@@ -1,20 +1,15 @@
 
-randomString = require "random-string"
-repeatString = require "repeat-string"
 isNodeJS = require "isNodeJS"
-Promise = require "Promise"
-combine = require "combine"
 didExit = require "didExit"
 coffee = require "coffee-script"
-Module = require "module"
 rimraf = require "rimraf"
 isDev = require "isDev"
-Path = require "path"
+path = require "path"
 sync = require "sync"
 fs = require "fsx"
-VM = require "vm"
+vm = require "vm"
 
-template = fs.readFile Path.resolve __dirname + "/../src/template.coffee"
+template = fs.readFile path.resolve __dirname + "/../src/template.coffee"
 
 module.exports = (entry, options = {}) ->
 
@@ -25,19 +20,19 @@ module.exports = (entry, options = {}) ->
   # Resolve the script path
   #
 
-  entryDir = Path.dirname entry
-  outDir = Path.resolve entryDir, "tmp"
+  entryDir = path.dirname entry
+  outDir = path.resolve entryDir, "tmp"
 
   loop
     id = Random.id 6
-    break unless fs.exists Path.join outDir, id + ".coffee"
+    break unless fs.exists path.join outDir, id + ".coffee"
 
   relatives = {}
   sync.each ["coffee", "js", "map"], (ext) ->
     relatives[ext] = id + "." + ext
 
   absolutes = sync.map relatives, (filePath) ->
-    Path.join outDir, filePath
+    path.join outDir, filePath
 
   mapRef = log.ln + "//# sourceMappingURL=" + relatives.map + log.ln
 
@@ -52,7 +47,7 @@ module.exports = (entry, options = {}) ->
     .join log.ln + "    "
 
   script = [
-    "__dirname = \"#{Path.dirname absolutes.js}\""
+    "__dirname = \"#{path.dirname absolutes.js}\""
     "__filename = \"#{absolutes.js}\""
     template.replace /\$SCRIPT/g, script
   ].join log.ln
@@ -96,7 +91,7 @@ module.exports = (entry, options = {}) ->
   log.white "lotus-lab "
   log.green id
   log.moat 0
-  log.yellow Path.relative lotus.path, entry
+  log.yellow path.relative lotus.path, entry
   log.moat 1
   log.popIndent()
 
@@ -111,12 +106,13 @@ module.exports = (entry, options = {}) ->
   }
 
   global.__module = makeModule entry, module
-  VM.runInThisContext "try { global.__module.require('#{absolutes.js}') } catch(error) { console.log('caught error!'); process.exit(0) }"
+  vm.runInThisContext "try { global.__module.require('#{absolutes.js}') } catch(error) { console.log('caught error!'); process.exit(0) }"
   return yes
 
-Module = require "module"
-makeModule = (modulePath, parentModule) ->
-  newModule = new Module modulePath, parentModule
-  newModule.filename = modulePath
-  newModule.dirname = Path.dirname modulePath
-  return newModule
+createModule = do ->
+  Module = require "module"
+  return (modPath, parent) ->
+    mod = new Module modPath, parent
+    mod.filename = modPath
+    mod.dirname = path.dirname modPath
+    return mod
