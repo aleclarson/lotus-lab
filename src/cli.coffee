@@ -1,8 +1,8 @@
 
-{ spawn } = require "child_process"
+{spawn} = require "child_process"
 
-syncFs = require "io/sync"
 Path = require "path"
+fs = require "fsx"
 
 module.exports = (options) ->
 
@@ -14,9 +14,9 @@ module.exports = (options) ->
     dir = Path.resolve parentDir, dir
 
   path = dir
-  path += "/lab/" + filename + ".coffee" if syncFs.isDir dir
+  path += "/lab/" + filename + ".coffee" if fs.isDir dir
 
-  unless syncFs.isFile path
+  unless fs.isFile path
     log.moat 1
     log.red "Invalid file: "
     log.white path
