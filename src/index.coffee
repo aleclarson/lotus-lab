@@ -1,6 +1,4 @@
 
-exports.initCommands = ->
-
-  lab: -> require "./cli"
-
-  repl: -> require "./repl"
+exports.loadCommands = ->
+  lab: require "./cli"
+  repl: require "./repl"
