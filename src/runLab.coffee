@@ -6,19 +6,19 @@ Promise = require "Promise"
 combine = require "combine"
 didExit = require "exit"
 coffee = require "coffee-script"
-syncFs = require "io/sync"
 Module = require "module"
+rimraf = require "rimraf"
 isDev = require "isDev"
 Path = require "path"
 sync = require "sync"
-FS = require "io/sync"
+fs = require "fsx"
 VM = require "vm"
 
-template = FS.read Path.resolve __dirname + "/../src/template.coffee"
+template = fs.readFile Path.resolve __dirname + "/../src/template.coffee"
 
 module.exports = (entry, options = {}) ->
 
-  if not FS.isFile entry
+  unless fs.isFile entry
     throw Error "Must provide a file path: '#{entry}'"
 
   #
@@ -30,7 +30,7 @@ module.exports = (entry, options = {}) ->
 
   loop
     id = Random.id 6
-    break unless FS.exists Path.join outDir, id + ".coffee"
+    break unless fs.exists Path.join outDir, id + ".coffee"
 
   relatives = {}
   sync.each ["coffee", "js", "map"], (ext) ->
@@ -45,8 +45,8 @@ module.exports = (entry, options = {}) ->
   # Build the script
   #
 
-  script = FS
-    .read entry
+  script =
+    fs.readFile entry
     .trim()
     .split log.ln
     .join log.ln + "    "
@@ -77,17 +77,18 @@ module.exports = (entry, options = {}) ->
     log.moat 1
     return no
 
-  FS.makeDir outDir
-  FS.write absolutes.coffee, script
-  FS.write absolutes.js, output.js + mapRef
-  FS.write absolutes.map, output.v3SourceMap
+  fs.writeDir outDir
+  fs.writeFile absolutes.coffee, script
+  fs.writeFile absolutes.js, output.js + mapRef
+  fs.writeFile absolutes.map, output.v3SourceMap
 
   didExit ->
     log.moat 1
     log.red "EXIT"
     log.moat 1
     if options.preservePaths isnt yes
-      sync.each absolutes, (path) -> FS.remove path
+      sync.each absolutes, (path) ->
+        rimraf.sync path
     return
 
   log.pushIndent 2
