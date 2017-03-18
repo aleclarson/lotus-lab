@@ -1,0 +1,16 @@
+{
+  "name": "lotus-lab",
+  "version": "2.0.0",
+  "main": "js/index",
+  "dependencies": {
+    "Promise": "aleclarson/Promise#2.2.1",
+    "coffee-script": "aleclarson/coffee-script#1.12.4",
+    "didExit": "aleclarson/didExit#1.1.0",
+    "fsx": "aleclarson/fsx#1.2.0",
+    "immediate": "aleclarson/immediate#4.1.1",
+    "isDev": "aleclarson/isDev#2.0.0",
+    "isNodeJS": "aleclarson/isNodeJS#2.0.0",
+    "rimraf": "^2.6.1",
+    "sync": "aleclarson/sync#1.0.2"
+  }
+}
