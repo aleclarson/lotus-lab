@@ -13,7 +13,7 @@
     "Promise": "aleclarson/Promise#2.2.1",
     "coffee-script": "aleclarson/coffee-script#1.12.4",
     "combine": "aleclarson/combine#1.0.0",
-    "exit": "aleclarson/exit#1.0.0",
+    "didExit": "aleclarson/didExit#1.1.0",
     "fsx": "aleclarson/fsx#1.2.0",
     "immediate": "aleclarson/immediate#4.1.1",
     "isDev": "aleclarson/isDev#2.0.0",
